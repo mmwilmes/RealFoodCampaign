@@ -1,0 +1,55 @@
+---
+title: "RFC_project_overview"
+author: "Madlen Wilmes"
+date: "6/22/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Real Food Campaign - Project Overview
+
+URL: [lab.realfoodcampaign.org](lab.realfoodcampaign.org)
+
+- world-wide initiative of scientists to investigate nutrient content of produce in actual food supply chain (not controlled environment)
+- measured compounds: antioxidants and minerals
+- focus on data quantity, quality, cost, and utility
+- connecting soil and food quality
+- lab tests of produce and soil
+- open science: all data publicly accessible, but anonymized to protect privacy
+
+
+## Collaboration/Communication
+
+[Overview of survey]([https://lab.realfoodcampaign.org/rfc-food-soil-survey-2019)\\
+[GitLab](https://gitlab.com/our-sci/rfc-docs/-/tree/master)
+
+
+## Main delivery
+
+- predict Polyphenols and Antioxidants of produce in the field (upon measurement with Our Sci reflectometer)
+
+## Lab
+
+- spectroscopy data
+  - SIWARE NIR 
+  - open source matrix reflectometer (Our Sci), readings in range 365-940nm
+- tissue
+- juice
+
+
+## Data
+
+[2019 Survey results](https://gitlab.com/our-sci/rfc-docs/-/tree/master/2019)
+
+
+
+
+
+## Analysis
+
+Load in browser: [dataAnalysis.html](./dataAnalysis.html)

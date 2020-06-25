@@ -1,0 +1,51 @@
+---
+title: "RFC_FirstExploration"
+author: "Madlen Wilmes"
+date: "6/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load libraries}
+library(dplyr)
+library(ggplot2)
+```
+
+
+
+## Read human readable averaged scans
+The data can be downloaded from the [gitlab of the Real Food Campaign](https://gitlab.com/our-sci/rfc-docs/-/tree/master/2019)
+
+```{r ingest human readable avg scans}
+dat <- read.csv("./rfc-docs-master-2019/2019/completeDatasetHumanReadableMeans.csv")
+str(dat)
+# There are 127 measures in the (reduced!) data set!
+# list all variables
+colnames(dat)
+head(dat[,1:10])
+```
+
+```{r counts of per crop}
+dat %>% group_by(Type) %>% summarize(counts = n()) %>% arrange(desc(counts))
+```
+
+
+```{r counts of varieties within crops}
+dat %>% group_by(Type) %>% summarize(probes_count = n(), variety_counts = n_distinct(Variety), .groups='keep') %>% arrange(desc(variety_counts))
+```
+
+```{r completeness of source per variety}
+dat %>% group_by(Type, Variety) %>% summarize(source_count = n_distinct(Source), .groups='keep')
+```
+Only few varieties have all three levels of source ("farm","farm_market", "store")
+
+```{r}
+dat %>% filter(Type == "carrot") %>% group_by(Variety, Source) %>% summarise(meanAntiox = mean(Antioxidants))
+```
+
+```{r}
+dat %>% select(State, Antioxidants, Polyphenols)
+```

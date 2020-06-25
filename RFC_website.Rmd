@@ -1,0 +1,24 @@
+---
+title: "RFC_wesite_suggestions"
+author: "Madlen Wilmes"
+date: "6/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+https://lab.realfoodcampaign.org/
+
+- fix typo: "We’re can adjust methods"
+- `contact info` leads to [about page](https://lab.realfoodcampaign.org/about/)
+- have identifiable branding throughout (logo) differs [here](https://lab.realfoodcampaign.org/) and [here](http://forum.goatech.org/c/real-food-campaign)
+
+
+fix link on http://forum.goatech.org/about --> Contact section --> link "openagdev.org" leads to [404](http://forum.goatech.org/openagdev.org) 
+
+
+
+## https://gitlab.com/our-sci/rfc-docs/-/tree/master/2019
+in section"Versions Offered for Every File", the file names do not match actual files (but possible to infer)
