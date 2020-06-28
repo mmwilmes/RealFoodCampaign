@@ -20,7 +20,7 @@ library(ggplot2)
 The data can be downloaded from the [gitlab of the Real Food Campaign](https://gitlab.com/our-sci/rfc-docs/-/tree/master/2019)
 
 ```{r ingest human readable avg scans}
-dat <- read.csv("./rfc-docs-master-2019/2019/completeDatasetHumanReadableMeans.csv")
+dat <- read.csv("./rfc-docs/2019/completeDatasetHumanReadableMeans.csv")
 str(dat)
 # There are 127 measures in the (reduced!) data set!
 # list all variables
@@ -42,9 +42,31 @@ dat %>% group_by(Type, Variety) %>% summarize(source_count = n_distinct(Source),
 ```
 Only few varieties have all three levels of source ("farm","farm_market", "store")
 
-```{r}
-dat %>% filter(Type == "carrot") %>% group_by(Variety, Source) %>% summarise(meanAntiox = mean(Antioxidants))
+```{r distribution of source across produce Type}
+dat %>% group_by(Source) %>% summarize(sample_count = n())
+dat %>% group_by(Type, Source) %>% summarize(sample_count = n()) %>% 
+  ggplot(aes(Type, sample_count)) +
+  geom_bar(aes(fill = Source), position = "dodge", stat="identity")
 ```
+
+
+```{r plot difference in antiox by source}
+dat %>% 
+  group_by(Type, Source) %>% 
+  ggplot(aes(Type, Antioxidants)) +
+  geom_boxplot(aes(fill = Source))
+```
+
+
+```{r stats difference by source}
+fit1 <- aov(Antioxidants ~ Type:Source, data = dat)
+summary(fit1)
+TukeyHSD(fit1)
+hist(residuals(fit1),
+     col="darkgray")
+```
+
+
 
 ```{r}
 dat %>% select(State, Antioxidants, Polyphenols)
