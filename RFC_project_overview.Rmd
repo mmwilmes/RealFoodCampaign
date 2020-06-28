@@ -46,7 +46,9 @@ URL: [lab.realfoodcampaign.org](lab.realfoodcampaign.org)
 
 [2019 Survey results](https://gitlab.com/our-sci/rfc-docs/-/tree/master/2019)
 
-
+- Brix is the sugar content in aqueous solution; one degree Brix is 1 gram of sucrose in 100 grams of solution and represents the strength of the solution as percentage by mass
+- How are Polyphenols and Antioxidants measured?
+- Is Dry.Mass in relation to some Fresh.Mass? 
 
 
 

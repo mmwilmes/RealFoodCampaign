@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r load libraries}
 library(dplyr)
 library(ggplot2)
+theme_set(theme_bw())
+library(usmap)
 ```
 
 
@@ -27,6 +29,32 @@ str(dat)
 colnames(dat)
 head(dat[,1:10])
 ```
+
+```{r basics}
+dim(dat)
+```
+
+```{r summary}
+summary(dat)
+```
+
+## Findings from `summary`
+- variable "Unique.Planting" is entirely empty
+- variable "Share.Code" contains only zeros
+- free-text fields not very useful (e.g., does Quality.in.field:spotted mean  the same as Quality.in.field:pest?)
+- should "quality.in.lab:rotten" even be considered?
+- does "Brix" only measure sucrose?
+- approximately >90% of samples do not have mineral data from crop or soil
+- ~ 20% does not have juice scan data
+- ~ 80% does not have seetness/taste information
+
+
+## Questions from `summary`
+- Do farm practices matter (e.g., hydroponic vs others)
+- Does `Quality.in.field` matter? (e.g., 'pest')
+- What does Quality.in.lab:yes mean?
+
+
 
 ```{r counts of per crop}
 dat %>% group_by(Type) %>% summarize(counts = n()) %>% arrange(desc(counts))
@@ -67,7 +95,23 @@ hist(residuals(fit1),
 ```
 
 
+```{r plot difference in Dry.Mass}
+dat %>% 
+  group_by(Type, Source) %>% 
+  ggplot(aes(Type, Dry.Mass....x.100.)) +
+  geom_boxplot(aes(fill = Source))
+```
 
-```{r}
-dat %>% select(State, Antioxidants, Polyphenols)
+
+```{r plot difference in Crop..Potassium}
+dat %>% 
+  group_by(Type, Source) %>% 
+  ggplot(aes(Type, Dry.Mass....x.100.)) +
+  geom_boxplot(aes(fill = Source))
+```
+
+
+
+```{r sample contributions at state level}
+dat %>% group_by(State, Type, Source) %>% summarize(sample_count = n())
 ```
