@@ -46,13 +46,14 @@ summary(dat)
 - does "Brix" only measure sucrose?
 - approximately >90% of samples do not have mineral data from crop or soil
 - ~ 20% does not have juice scan data
-- ~ 80% does not have seetness/taste information
+- ~ 80% does not have sweetness/taste information
 
 
 ## Questions from `summary`
 - Do farm practices matter (e.g., hydroponic vs others)
 - Does `Quality.in.field` matter? (e.g., 'pest')
 - What does Quality.in.lab:yes mean?
+- What is the difference of Lab = "No Lab" and Lab = NA?
 
 
 
@@ -114,4 +115,40 @@ dat %>%
 
 ```{r sample contributions at state level}
 dat %>% group_by(State, Type, Source) %>% summarize(sample_count = n())
+```
+
+We would like to know if there is a `lab` effect (i.e., if handling/instruments in different labs has an effect on measurement outcome)
+```{r # samples processed per lab and produce type}
+levels(dat$Lab)
+
+dat %>% 
+  group_by(Lab, Type) %>% 
+  summarize(counts = n()) %>% 
+  ggplot(aes(x = Lab, y = counts, fill = Type)) +
+  geom_bar(position="dodge", stat="identity")
+```
+
+What is measured in Chico?
+```{r}
+dat %>% filter(Lab == "Chico")
+```
+Chemical crop and soil parameters are never measured in Chico (e.g., Crop..Calcium).
+
+
+
+```{r does lab have effect?}
+dat %>% 
+  group_by(Type, Lab) %>% 
+  ggplot(aes(Type, Antioxidants)) +
+  geom_boxplot(aes(fill = Lab))
+```
+
+```{r aov of lab effect}
+# Note that this is an ANOVA type I test with a highly unbalanced design (i.e., this is not the right way to do it...)
+# Changing the order of variables, changes the results... 
+# TODO
+fit1 <- aov(Antioxidants ~ Lab * Type, data = dat)
+summary(fit1)
+TukeyHSD(fit1)
+hist(residuals(fit1), breaks = 100)
 ```
