@@ -1,0 +1,83 @@
+---
+title: "RidgeRegression"
+author: "Madlen Wilmes"
+date: "7/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries
+```{r load libraries, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(mltools) # for one hot encoding (categorical encoding)
+library(glmnet)
+library(softImpute)
+```
+
+## Read data
+
+```{r ingest human readable avg scans}
+dat <- read.csv("./rfc-docs/2019/completeDatasetHumanReadableMeans.csv")
+str(dat)
+```
+
+```{r remove variables that are not of interest}
+remove_cols <- c("Planting", "Unique.Planting", "Share.Code", "Store.Name", "Store.Brand", "Farmer", "Quality.in.field", "Quality.in.lab", "Color", "Damage", "Farm.Practices", "id_sample", "id_subsample.x", "id_subsample.y", "idSplittingRule.x", "idSplittingRule.y", "State", "Variety", "siwareDate")
+dat_removed <- dat %>% select(-one_of(remove_cols))
+
+# which remaining cols are factors (i.e., might need transformation?)
+names(Filter(is.factor, dat_removed))
+```
+
+TODO: 
+- Reduce number of features by engeneering location data as 6 regions (west/mid/east/north/south) instead of individual states
+- include date to capture systematic errors (device accuracy declining over time, or mishandling on a particular day)
+
+
+```{r filter incomplete antioxidant rows}
+# dat_removed <- dat_removed %>% filter(!is.na(Antioxidants))
+```
+
+
+```{r one_hot encoding of categorical variables}
+dat_removed <- as.data.table(dat_removed)
+dat_encoded <- one_hot(dat_removed, cols = names(Filter(is.factor, dat_removed)), dropCols = TRUE)
+```
+
+
+```{r matrix completion}
+# svd... single vector decomposition --> like PCA but all components, not just the top ones
+# svdals...compute a low rank soft-thresholded svd by alternating orthogonal ridge regression
+# rank.max --> number of underlying features to describe each row
+dat_matrix <- as.matrix(dat_encoded)
+fit1 <- softImpute(dat_matrix, rank.max = 10, lambda = 0, type = c("als"), thresh = 1e-05,
+maxit = 100, trace.it = FALSE, warm.start = NULL, final.svd = TRUE)
+dat_imputed <- complete(dat_encoded, fit1)
+```
+
+
+```{r normalize data} 
+## subtracts the mean and divides by the standard deviation (column-wise)
+dat_normalized <- scale(dat_imputed)
+```
+
+
+```{r split into x and y}
+x_train = dat_normalized[,c(1:17,19:110)]
+y_train = dat_normalized[,c("Antioxidants")]
+```
+
+```{r Lassomodel}
+mod = glmnet(x_train, y_train, alpha = 1)
+```
+
+```{r plot model}
+plot(mod)
+names(arrdat4)[13]
+names(arrdat4)[11]
+```

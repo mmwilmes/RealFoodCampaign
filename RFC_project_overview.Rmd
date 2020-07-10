@@ -18,7 +18,7 @@ URL: [lab.realfoodcampaign.org](lab.realfoodcampaign.org)
 - world-wide initiative of scientists to investigate nutrient content of produce in actual food supply chain (not controlled environment)
 - measured compounds: antioxidants and minerals
 - focus on data quantity, quality, cost, and utility
-- connecting soil and food quality
+- connecting soil and food quality using low-cost, high throughput food and soil survey with nutrient data
 - lab tests of produce and soil
 - open science: all data publicly accessible, but anonymized to protect privacy
 
@@ -27,15 +27,22 @@ URL: [lab.realfoodcampaign.org](lab.realfoodcampaign.org)
 
 [Overview of survey]([https://lab.realfoodcampaign.org/rfc-food-soil-survey-2019)\\
 [GitLab](https://gitlab.com/our-sci/rfc-docs/-/tree/master)
+[Project Status and Direction](https://lab.realfoodcampaign.org/yearly-plan-2020/)
 
 
-## Main delivery
+## Main goals and deliverable
 
-- predict Polyphenols and Antioxidants of produce in the field (upon measurement with Our Sci reflectometer)
+- investigate the amount of variation and causes of variation of nutrient density in crops
+- identify ways to deliver nutrient density information in real time to farmers, consumers, and other parts of the supply chain.
+- ultimately, predict in-field / on-farm nutritional density in produce using an app --> predict nutrient levels (e.g., Polyphenols and Antioxidants) of produce in the field (upon measurement with Our Sci reflectometer)
+
+Objectives and status also layed out in (grant)[https://docs.google.com/document/d/1nHS-S44fyTQWrnddU-ROIFZW0rKQ3ewnf-0Yg_Y9Pyg/edit?usp=sharing] 
+
 
 ## Lab
 
-- spectroscopy data
+[Lab protocols](https://docs.google.com/document/d/1cZ2QzDeds-UAiLPyJox4WCPKM_l0UOzbgFRoyCEyXsk/edit?usp=sharing)
+- spectroscopy data ([selection of spectral ranges by James Frame](https://docs.google.com/spreadsheets/d/1akTy7BDZkQzCl9PbkOlstN4ieeR03wQBnlgsIS-qjR8/edit?usp=sharing))
   - SIWARE NIR 
   - open source matrix reflectometer (Our Sci), readings in range 365-940nm
 - tissue
@@ -50,8 +57,13 @@ URL: [lab.realfoodcampaign.org](lab.realfoodcampaign.org)
 - How are Polyphenols and Antioxidants measured?
 - Is Dry.Mass in relation to some Fresh.Mass? 
 
+### Additional data sources:
+- USDA nutrition data
 
 
 ## Analysis
 
+
+
 Load in browser: [dataAnalysis.html](./dataAnalysis.html)
+
